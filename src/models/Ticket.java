@@ -5,7 +5,6 @@ import java.util.Scanner;
 import utils.DBConnection;
 
 public class Ticket {
-    Scanner input = new Scanner(System.in);
     private int ticketId;
     private float prix;
     private int spectateurId;

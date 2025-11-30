@@ -1,5 +1,6 @@
 package dao;
 
+import models.Film;
 import models.Spectateur;
 
 import java.beans.PropertyEditorSupport;
@@ -27,6 +28,7 @@ public class SpectateurDAO {
     }
 
     public void getAllSpectateurs() throws SQLException {
+        spectateurs.clear();
         String showQuery = "SELECT * FROM spectateurs";
         Statement showStmt = connection.createStatement();
         ResultSet resultset = showStmt.executeQuery(showQuery);
@@ -43,19 +45,57 @@ public class SpectateurDAO {
         }
     }
 
-    public void getSpectateurByid(){
-
-    }
-
-    public void afficherSpectateurs() {
-        System.out.println("=== List of spectators ===");
-        for (Spectateur spec : spectateurs) {
-            spec.afficherSpectateur();
+    public Spectateur getSpectateurByid(int id) throws SQLException {
+        Spectateur spectateur1 = null;
+        String idQuery = "SELECT * FROM spectateurs WHERE spectateurId = ?";
+        PreparedStatement idStmt = connection.prepareStatement(idQuery);
+        idStmt.setInt(1,id);
+        ResultSet resultSet = idStmt.executeQuery();
+        if (resultSet.next()) {
+            int spectateurId = resultSet.getInt("spectateurId");
+            String nom = resultSet.getString("nom");
+            String  email = resultSet.getString("email");
+            spectateur1 = new Spectateur(
+                    resultSet.getInt("spectateurId"),
+                    resultSet.getString("nom"),
+                    resultSet.getString("email")
+            );
+            System.out.println("ID: " + spectateurId + ", Nom : " + nom + ", email : " + email);
         }
+        if(spectateur1 == null){
+            System.out.println("No spectator found for id "+id);
+        }
+        resultSet.close();
+        idStmt.close();
+        return spectateur1;
     }
+    public int login(String nom, String email) throws SQLException {
+        Spectateur spec1 = null;
+        String Query = "SELECT * FROM spectateurs WHERE nom = ? AND email = ?";
+        PreparedStatement loginStmt = connection.prepareStatement(Query);
+        loginStmt.setString(1, nom);
+        loginStmt.setString(2, email);
+
+       try(ResultSet resultSet = loginStmt.executeQuery()){
+           if (resultSet.next()) {
+               spec1 = new Spectateur(
+                       resultSet.getInt("spectateurId"),
+                       resultSet.getString("nom"),
+                       resultSet.getString("email")
+               );
+               System.out.println("Login successfully");
+               return spec1.getSpectateurId();
+           } else {
+               System.out.println("Invalid credentials !!!");
+               return-1;
+           }
+       }
+
+    }
+
     public void deleteSpectateur() throws SQLException {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the spectator id :");
+        System.out.print("Enter the spectator id :");
         int id = input.nextInt();
         String idQuery = "DELETE FROM spectateurs WHERE spectateurId = ?";
         PreparedStatement deleteStmt = connection.prepareStatement(idQuery);

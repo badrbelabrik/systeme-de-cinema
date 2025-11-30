@@ -30,6 +30,7 @@ public class SeanceDAO {
     }
 
     public void getAllSeances() throws SQLException {
+        seances.clear();
         String showQuery = "SELECT * FROM seances";
         Statement showStmt = connection.createStatement();
         ResultSet resultSet = showStmt.executeQuery(showQuery);
@@ -73,7 +74,7 @@ public class SeanceDAO {
                     resultSet.getString("salle"),
                     resultSet.getInt("filmId")
             );
-            System.out.println("ID: " + seanceId + ", date : " + horaire + ", prix : " + prix + ", capacite maximale : " + capaciteMaximale
+            System.out.println("ID: " + seanceId + ", date : " +date+", horaire :" +horaire + ", prix : " + prix + ", capacite maximale : " + capaciteMaximale
                     +", salle : "+salle+", film id : "+filmId);
         }
 
@@ -82,6 +83,37 @@ public class SeanceDAO {
         }
         return seance1;
     }
+    public boolean getseanceByfilm(int id) throws SQLException {
+        seances.clear();
+        String idQuery = "SELECT * FROM seances WHERE filmId= ?";
+            PreparedStatement filmStmt = connection.prepareStatement(idQuery);
+            filmStmt.setInt(1, id);
+            ResultSet resultSet = filmStmt.executeQuery();
+        while(resultSet.next()){
+            int seanceId = resultSet.getInt("seanceId");
+            String date = resultSet.getString("date");
+            String horaire = resultSet.getString("horaire");
+            float prix = resultSet.getFloat("prix");
+            int capaciteMaximale = resultSet.getInt("capaciteMaximale");
+            String salle = resultSet.getString("salle");
+            int filmId = resultSet.getInt("filmId");
+            seances.add(new Seance(seanceId,date,horaire,prix,capaciteMaximale,salle,filmId));
+        }
+        resultSet.close();
+        filmStmt.close();
+        if (seances.isEmpty()) {
+            System.out.println("No seances available for this movie.");
+            return false;
+        }else{
+            System.out.println("=== List of seances for this film ===");
+            for (Seance seance : seances) {
+                seance.afficherSeance();
+            }
+            return true;
+        }
+
+    }
+
     public void deleteSeance(int id) throws SQLException {
         String idQuery = "DELETE FROM seances WHERE seanceId = ?";
         PreparedStatement deleteStmt = connection.prepareStatement(idQuery);

@@ -17,7 +17,9 @@ public class Main {
         SeanceDAO sdao1 = new SeanceDAO(con1);
         SpectateurDAO specdao1 = new SpectateurDAO(con1);
         AdminMenu menu1 = new AdminMenu(tdao1,fdao1,sdao1,specdao1);
+        UserMenu usermenu1 = new UserMenu(tdao1,fdao1,sdao1,specdao1);
         menu1.mainAdminMenu();
+        usermenu1.Mainmenu();
     }
 }
 

@@ -30,6 +30,7 @@ public class FilmDAO {
     }
 
     public void getAllFilms() throws SQLException {
+        films.clear();
         String showQuery = "SELECT * FROM films";
         Statement showStmt = connection.createStatement();
         ResultSet resultSet = showStmt.executeQuery(showQuery);

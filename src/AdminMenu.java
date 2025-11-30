@@ -26,7 +26,7 @@ public class AdminMenu {
             System.out.println("1. Spectateurs management");
             System.out.println("2. Films management");
             System.out.println("3. Seances management");
-            System.out.println("4. Ticket management");
+            System.out.println("4. Tickets management");
             System.out.println("0. Exit");
             System.out.print("Enter you choice :");
             choix = input.nextInt();
@@ -57,8 +57,8 @@ public class AdminMenu {
         int choix;
         do{
            System.out.println("1. Show all spectators");
-           System.out.println("2. get spectator by id");
-           System.out.println("3. delete spectator");
+           System.out.println("2. Get spectator by id");
+           System.out.println("3. Delete spectator");
            System.out.println("0. Retour");
            System.out.print("choose an option :");
            choix = input.nextInt();
@@ -68,7 +68,9 @@ public class AdminMenu {
                    specdao.getAllSpectateurs();
                    break;
                case 2:
-                   specdao.getSpectateurByid();
+                   System.out.print("Enter the spectator id :");
+                   int id = input.nextInt();
+                   specdao.getSpectateurByid(id);
                    break;
                case 3:
                    specdao.deleteSpectateur();
@@ -83,27 +85,23 @@ public class AdminMenu {
     public void ticketMenu() throws SQLException {
         int choix;
        do{
-           System.out.println("1. Ajouter une ticket");
-           System.out.println("2. Show all tickets");
-           System.out.println("3. show ticket by id");
-           System.out.println("4. delete ticket");
+           System.out.println("1. Show all tickets");
+           System.out.println("2. show ticket by id");
+           System.out.println("3. delete ticket");
            System.out.println("0. retour");
            System.out.println("Choose an option :");
            choix = input.nextInt();
 
            switch(choix){
                case 1:
-
-                   break;
-               case 2:
                    tdao.getAllTickets();
                    break;
-               case 3:
+               case 2:
                    System.out.print("Enter the ticket id :");
                    int id = input.nextInt();
                    tdao.getTicketById(id);
                    break;
-               case 4:
+               case 3:
                    System.out.print("Enter ticket id that you want to delete :");
                    id = input.nextInt();
                    tdao.deleteTicket(id);
@@ -116,10 +114,10 @@ public class AdminMenu {
     public void filmMenu() throws SQLException {
         int choix;
         do{
-            System.out.println("1.ajouter une film");
+            System.out.println("1. Add film");
             System.out.println("2. Show all films");
             System.out.println("3. show film by id");
-            System.out.println("4. delete film");
+            System.out.println("4. Delete film");
             System.out.println("0. retour");
             System.out.print("choose an option :");
             choix = input.nextInt();
@@ -156,7 +154,7 @@ public class AdminMenu {
     public void seanceMenu() throws SQLException {
         int choix;
         do{
-            System.out.println("1.ajouter une seance");
+            System.out.println("1. Add seance");
             System.out.println("2. Show all seances");
             System.out.println("3. show seance by id");
             System.out.println("4. delete seance");

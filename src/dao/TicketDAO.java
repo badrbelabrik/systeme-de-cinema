@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TicketDAO {
-    Scanner input = new Scanner(System.in);
     private Connection connection;
     private List<Ticket> tickets = new ArrayList<>();
     public TicketDAO(Connection connection){
@@ -24,6 +23,7 @@ public class TicketDAO {
         addStmt.close();
     }
     public void getAllTickets() throws SQLException {
+        tickets.clear();
         String selectQuery = "SELECT * FROM tickets";
         Statement showStmt = connection.createStatement();
         ResultSet resultSet = showStmt.executeQuery(selectQuery);

@@ -32,6 +32,7 @@ public class TicketDAO {
             float prix = resultSet.getFloat("prix");
             int spectateurId = resultSet.getInt("spectateurId");
             int seanceId = resultSet.getInt("seanceId");
+            tickets.add(new Ticket(ticketId,prix,spectateurId,seanceId));
             System.out.println("ID: " + ticketId + ", Prix : " + prix + ", spectateurId : " + spectateurId + ", seanceId : " + seanceId);
         }
         resultSet.close();

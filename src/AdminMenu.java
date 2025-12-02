@@ -45,7 +45,7 @@ public class AdminMenu {
                     ticketMenu();
                     break;
                 case 0:
-                    System.out.print("Exiting");
+                    System.out.println("Exiting");
                     break;
                 default:
                     System.out.println("invalid choice");
@@ -89,7 +89,7 @@ public class AdminMenu {
            System.out.println("2. show ticket by id");
            System.out.println("3. delete ticket");
            System.out.println("0. retour");
-           System.out.println("Choose an option :");
+           System.out.print("Choose an option :");
            choix = input.nextInt();
 
            switch(choix){
